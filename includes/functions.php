@@ -5,7 +5,6 @@ function Total($post)
 {
     return ($_POST["price"] + $_POST["ads"] + $_POST["taxes"] - $_POST["discount"]) * $_POST["count"];
 }
-
 function insertProduct($pdo)
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +13,18 @@ function insertProduct($pdo)
 
         $result = $pdo->prepare($sql);
         $result->execute([$_POST["title"], $_POST["price"], $_POST["taxes"], $_POST["ads"], $_POST["discount"], $totalValue, $_POST["category"], $_POST["count"]]);
-        header("location: ../index.php");
+        selectProduct($pdo);
+        // header("location: ../index.php");
+    }
+}
+function selectProduct($pdo)
+{
+    $selectQuery = "SELECT * FROM product;";
+    $select = $pdo->prepare($selectQuery);
+    $select->execute();
+
+    while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+        print_r($row);
     }
 }
 
