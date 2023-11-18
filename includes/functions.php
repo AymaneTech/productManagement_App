@@ -13,10 +13,10 @@ function insertProduct($pdo)
 
         $result = $pdo->prepare($sql);
         $result->execute([$_POST["title"], $_POST["price"], $_POST["taxes"], $_POST["ads"], $_POST["discount"], $totalValue, $_POST["category"], $_POST["count"]]);
-        selectProduct($pdo);
-        // header("location: ../index.php");
+        header("location: ../index.php");
     }
 }
+insertProduct($pdo);
 function selectProduct($pdo)
 {
     $selectQuery = "SELECT * FROM product;";
@@ -24,7 +24,20 @@ function selectProduct($pdo)
     $select->execute();
 
     while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-        print_r($row);
+    ?>
+        <tr>
+        <td><?=$row["id"]?></td>
+        <td><?=$row["title"]?></td>
+        <td><?=$row["price"]?></td>
+        <td><?= $row["taxes"]?></td>
+        <td><?= $row["ads"]?></td>
+        <td><?= $row["discount"]?></td>
+        <td><?= $row["total"]?></td>
+        <td><?= $row["category"]?></td>
+        <td><button>update</button></td>
+        <td><button>Delete</button></td>
+    </tr>
+    <?php
     }
 }
 

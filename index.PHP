@@ -52,6 +52,9 @@
                     <th>delete</th>
                 </tr>
                 <tbody id="tableData">
+                    <?php
+                    selectProduct($pdo);
+                    ?>
 
                 </tbody>
             </table>
