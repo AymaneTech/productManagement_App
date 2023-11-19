@@ -19,23 +19,18 @@
         <div class="inputs">
             <form action="includes/functions.php" method="post">
 
-                <input name="title" type="text" id="title" placeholder="title">
-
-
+                <input value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["title"] : ""; ?>" name="title" type="text" id="title" placeholder="title">
                 <div class="price">
-
-
-
                     <input onkeyup="getTotal()" value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["price"] : ""; ?>" name="price" type="number" id="price" placeholder="price">
-                    <input onkeyup="getTotal()" name="taxes" type="number" id="taxes" placeholder="taxes">
-                    <input onkeyup="getTotal()" name="ads" type="number" id="ads" placeholder="ads">
-                    <input onkeyup="getTotal()" name="discount" type="number" id="discount" placeholder="discount">
-                    <small id="total"></small>
+                    <input onkeyup="getTotal()" value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["taxes"] : ""; ?>" name="taxes" type="number" id="taxes" placeholder="taxes">
+                    <input onkeyup="getTotal()" value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["ads"] : ""; ?>" name="ads" type="number" id="ads" placeholder="ads">
+                    <input onkeyup="getTotal()" value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["discount"] : ""; ?>" name="discount" type="number" id="discount" placeholder="discount">
+                    <small id="total"><?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["total"] : ""; ?></small>
                 </div>
-                <input name="count" type="number" placeholder="count" id="count">
-                <input name="category" type="text" placeholder="cetegory" id="category">
+                <input value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["count"] : ""; ?>" name="count" type="number" placeholder="count" id="count">
+                <input value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["category"] : ""; ?>" name="category" type="text" placeholder="cetegory" id="category">
 
-                <button name="insert" id="submit" type="submit">create</button>
+                <button name="<?php echo isset($_SESSION["data"]) ? "update" : "create"; ?>" id="submit" type="submit"><?php echo isset($_SESSION["data"]) ? "update" : "create"; ?></button>
             </form>
         </div>
         <div class="outputs">

@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["insert"])) {
         insertProduct($pdo);
     }
-
     if (isset($_POST["delete_button"])){
         $productIdToDelete = $_POST['productId'];
         deleteProduct($pdo, $productIdToDelete);
@@ -24,9 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }elseif($_SERVER['REQUEST_METHOD'] == "GET" ){
 
     if (isset($_GET["id"])) {
-
         $productIdToUpdate = intval($_GET['id']);
-
         updateProduct($pdo, $productIdToUpdate);
     }
 }
@@ -88,11 +85,11 @@ function updateProduct($pdo, $productIdToUpdate)
     $Getrow = $updateResult->fetch(PDO::FETCH_ASSOC);
     $id = $Getrow["id"];
 
-
     $_SESSION["data"] = $Getrow;
 
     session_write_close();
     header("Location: http://localhost/crudPhp/index.php");
+
    exit();
 }
 
@@ -127,9 +124,15 @@ function searchBytCategory($pdo, $categoryToSearch){
 
 
 // function calculate the total
+
 function Total($post)
 {
-    return ($_POST["price"] + $_POST["ads"] + $_POST["taxes"] - $_POST["discount"]) * $_POST["count"];
-}
+    $price = floatval($post["price"]);
+    $ads = floatval($post["ads"]);
+    $taxes = floatval($post["taxes"]);
+    $discount = floatval($post["discount"]);
+    $count = intval($post["count"]);
 
+    return ($price + $ads + $taxes - $discount) * $count;
+}
 ?>
