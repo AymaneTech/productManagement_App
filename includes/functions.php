@@ -8,8 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         insertProduct($pdo);
     }
     if (isset($_POST["update_button"])) {
+        $productIdToUpdate = $_POST['productId'];
+        updateProduct($pdo, $productIdToUpdate);
+    }
+    if (isset($_POST["delete_button"])){
         $productIdToDelete = $_POST['productId'];
-        updateProduct($pdo, $productIdToDelete);
+
     }
 }
 
@@ -58,27 +62,24 @@ function selectProduct($pdo)
 }
 
 // and this one is for updating a specific product
-function updateProduct($pdo, $productIdToDelete)
+function updateProduct($pdo, $productIdToUpdate)
 {
     $updateSql = "SELECT * FROM PRODUCT WHERE id = ?;";
     $updateResult = $pdo->prepare($updateSql);
-    $updateResult->execute([$productIdToDelete]);
+    $updateResult->execute([$productIdToUpdate]);
 
     $row = $updateResult->fetch(PDO::FETCH_ASSOC);
-      ?>
-    <form action="" method="post">
-        <input type="hidden" name="productId" value="<?= $row["id"] ?>">
-        <input type="text" name="title" value="<?= $row["title"] ?>" placeholder="title">
-        <!-- Add other input fields with values from $row -->
-        <button type="submit" name="update_product">Update Product</button>
-    </form>
-    <?php
-
-
-
-
-
+            // not finished yet
 }
+
+
+
+
+
+
+
+
+
 
 // function calculate the total
 function Total($post)
