@@ -13,7 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if (isset($_POST["delete_button"])){
         $productIdToDelete = $_POST['productId'];
-
+        deleteProduct($pdo, $productIdToDelete);
+    }
+    if(isset($_POST["searchByTitle"])){
+        $titleToSearch = $_POST["valueToSearch"];
+        searchBytTitle($pdo, $titleToSearch);
+    }
+    if(isset($_POST["searchByCategory"])){
+        $categoryToSearch = $_POST["valueToSearch"];
+        searchBytCategory($pdo, $categoryToSearch);
     }
 }
 
@@ -72,11 +80,32 @@ function updateProduct($pdo, $productIdToUpdate)
             // not finished yet
 }
 
+// delete product function
+function deleteProduct($pdo, $productIdToDelete){
+    $deleteQuery = " delete from product where id = ?;";
+    $deleteResult = $pdo->prepare($deleteQuery);
+    $deleteResult->execute([$productIdToDelete]);
+}
+
+//function to search by title
+function searchBytTitle($pdo, $titleToSearch){
+    $searchQuery = "SELECT * FROM product where title = ?";
+    $searhResult = $pdo->prepare($searchQuery);
+    $searhResult->execute([$titleToSearch]);
 
 
+    $row = $searhResult->fetch(PDO::FETCH_ASSOC);
+    header("Location: ../index.php?$row");
+}
+function searchBytCategory($pdo, $categoryToSearch){
+    $searchQuery = "SELECT * FROM product where title = ?";
+    $searhResult = $pdo->prepare($searchQuery);
+    $searhResult->execute([$categoryToSearch ]);
 
 
-
+    $row = $searhResult->fetch(PDO::FETCH_ASSOC);
+    header("Location: ../index.php?$row");
+}
 
 
 

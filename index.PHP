@@ -19,10 +19,10 @@
             <form action="includes/functions.php" method="post">
                 <input name="title" type="text" id="title" placeholder="title">
                 <div class="price">
-                    <input name="price" type="number" id="price" placeholder="price">
-                    <input name="taxes" type="number" id="taxes" placeholder="taxes">
-                    <input name="ads" type="number" id="ads" placeholder="ads">
-                    <input name="discount" type="number" id="discount" placeholder="discount">
+                    <input onkeyup="getTotal()" name="price" type="number" id="price" placeholder="price">
+                    <input onkeyup="getTotal()" name="taxes" type="number" id="taxes" placeholder="taxes">
+                    <input onkeyup="getTotal()" name="ads" type="number" id="ads" placeholder="ads">
+                    <input onkeyup="getTotal()" name="discount" type="number" id="discount" placeholder="discount">
                     <small id="total"></small>
                 </div>
                 <input name="count" type="number" placeholder="count" id="count">
@@ -32,11 +32,13 @@
         </div>
         <div class="outputs">
             <div class="searchBlock">
-                <input type="text" id="search" placeholder="search">
-                <div class="btnSearch">
-                    <button id="searchTitle">search by title</button>
-                    <button id="searchCategory">search by category</button>
-                </div>
+                <form action="includes/functions.php" method="post">
+                    <input type="text" id="search" placeholder="search" name="valueToSearch">
+                    <div class="btnSearch">
+                        <button id="searchTitle" name="searchByTitle">search by title</button>
+                        <button id="searchCategory" name="searchByCategory">search by category</button>
+                    </div>
+                </form>
             </div>
             <table>
                 <tr>
