@@ -27,7 +27,7 @@
                 </div>
                 <input name="count" type="number" placeholder="count" id="count">
                 <input name="category" type="text" placeholder="cetegory" id="category">
-                <button id="submit" type="submit">create</button>
+                <button name="insert" id="submit" type="submit">create</button>
             </form>
         </div>
         <div class="outputs">

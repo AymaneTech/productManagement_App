@@ -1,0 +1,30 @@
+
+To determine which button the user clicked (update or delete), you can modify your HTML by adding unique names or values to the buttons in the loop. Then, in your PHP code, you can check which button was clicked based on the submitted form data. Here's an example modification to your HTML and PHP code:
+
+Update the HTML part where you display the buttons:
+php
+Copy code
+<td>
+    <form method="post" action="update_or_delete.php">
+        <input type="hidden" name="product_id" value="<?=$row["id"]?>">
+        <button type="submit" name="update_button">Update</button>
+
+    </form>
+</td>
+In the above code, I added a hidden input field to store the product ID and added distinct names to the update and delete buttons.
+
+Modify your PHP code to handle the button clicks:
+php
+Copy code
+<?php
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if the update button is clicked
+    if (isset($_POST['update_button'])) {
+        $productIdToUpdate = $_POST['product_id'];
+        // Perform the update logic here
+        // You may redirect the user to an update page or perform the update in this file
+        // Example: header("location: update.php?id=".$productIdToUpdate);
+        echo "Update button clicked for product ID: " . $productIdToUpdate;
+    } elseif (isset($_POST['delete_button'])) {
+        // Check if the delete button is clicked
