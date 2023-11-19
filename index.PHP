@@ -1,4 +1,5 @@
-<?php include("./includes/functions.php");?>
+<?php include("./includes/functions.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +18,15 @@
         </div>
         <div class="inputs">
             <form action="includes/functions.php" method="post">
+
                 <input name="title" type="text" id="title" placeholder="title">
+
+
                 <div class="price">
-                    <input onkeyup="getTotal()" name="price" type="number" id="price" placeholder="price">
+
+
+
+                    <input onkeyup="getTotal()" value="<?php echo isset($_SESSION["data"]) ? $_SESSION["data"]["price"] : ""; ?>" name="price" type="number" id="price" placeholder="price">
                     <input onkeyup="getTotal()" name="taxes" type="number" id="taxes" placeholder="taxes">
                     <input onkeyup="getTotal()" name="ads" type="number" id="ads" placeholder="ads">
                     <input onkeyup="getTotal()" name="discount" type="number" id="discount" placeholder="discount">
@@ -27,6 +34,7 @@
                 </div>
                 <input name="count" type="number" placeholder="count" id="count">
                 <input name="category" type="text" placeholder="cetegory" id="category">
+
                 <button name="insert" id="submit" type="submit">create</button>
             </form>
         </div>
@@ -56,6 +64,7 @@
                 <tbody id="tableData">
                     <?php
                     selectProduct($pdo);
+                    session_unset();
                     ?>
 
                 </tbody>

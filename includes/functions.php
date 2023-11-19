@@ -1,16 +1,14 @@
 <?php
 include("db.php");
 
+session_start();
 
 // a general function to check if the server get request method ot type post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["insert"])) {
         insertProduct($pdo);
     }
-    if (isset($_POST["update_button"])) {
-        $productIdToUpdate = $_POST['productId'];
-        updateProduct($pdo, $productIdToUpdate);
-    }
+
     if (isset($_POST["delete_button"])){
         $productIdToDelete = $_POST['productId'];
         deleteProduct($pdo, $productIdToDelete);
@@ -23,18 +21,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $categoryToSearch = $_POST["valueToSearch"];
         searchBytCategory($pdo, $categoryToSearch);
     }
+}elseif($_SERVER['REQUEST_METHOD'] == "GET" ){
+
+    if (isset($_GET["id"])) {
+
+        $productIdToUpdate = intval($_GET['id']);
+
+        updateProduct($pdo, $productIdToUpdate);
+    }
 }
 
-// function of insert the data in database;
-    function insertProduct($pdo)
-    {
-        $sql = "INSERT INTO product (title, price, taxes, ads, discount, total, category, count) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $totalValue = Total($_POST);
 
-        $result = $pdo->prepare($sql);
-        $result->execute([$_POST["title"], $_POST["price"], $_POST["taxes"], $_POST["ads"], $_POST["discount"], $totalValue, $_POST["category"], $_POST["count"]]);
-        header("location: ../index.php");
-    }
+
+// function of insert the data in database;
+function insertProduct($pdo)
+{
+    $sql = "INSERT INTO product (title, price, taxes, ads, discount, total, category, count) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $totalValue = Total($_POST);
+
+    $result = $pdo->prepare($sql);
+    $result->execute([$_POST["title"], $_POST["price"], $_POST["taxes"], $_POST["ads"], $_POST["discount"], $totalValue, $_POST["category"], $_POST["count"]]);
+    header("location: ../index.php");
+}
 
 // and this one is for select and display database;
 function selectProduct($pdo)
@@ -58,7 +66,7 @@ function selectProduct($pdo)
             <form action="" method="post">
                 <input type="hidden" name="productId" value="<?=$row["id"]?>">
                 <td>
-                    <button type="submit" name="update_button">Update</button>
+                    <a href="http://localhost/crudPhp/index.php?id=<?= $row["id"] ?>">Update</a>
                 </td>
                 <td>
                     <button type="submit" name="delete_button">Delete</button>
@@ -72,12 +80,20 @@ function selectProduct($pdo)
 // and this one is for updating a specific product
 function updateProduct($pdo, $productIdToUpdate)
 {
+
     $updateSql = "SELECT * FROM PRODUCT WHERE id = ?;";
     $updateResult = $pdo->prepare($updateSql);
     $updateResult->execute([$productIdToUpdate]);
 
-    $row = $updateResult->fetch(PDO::FETCH_ASSOC);
-            // not finished yet
+    $Getrow = $updateResult->fetch(PDO::FETCH_ASSOC);
+    $id = $Getrow["id"];
+
+
+    $_SESSION["data"] = $Getrow;
+
+    session_write_close();
+    header("Location: http://localhost/crudPhp/index.php");
+   exit();
 }
 
 // delete product function
